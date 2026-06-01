@@ -10,14 +10,13 @@ import json
 
 
 # initialize dagshub
-import dagshub
 dagshub.init(repo_owner='ayushdev1905', repo_name='Food-Delivery-Time-Prediction', mlflow=True)
 
 
 # set the mlflow tracking server
 mlflow.set_tracking_uri("https://dagshub.com/ayushdev1905/Food-Delivery-Time-Prediction.mlflow")
 # set mlflow experment name
-mlflow.set_experiment("DVC Pipeline")
+mlflow.set_experiment("DVC-Pipeline")
 
 TARGET = "time_taken"
 
@@ -58,19 +57,21 @@ def load_model(model_path: Path):
     return model
 
 
-def save_model_info(save_json_path,run_id, artifact_path, model_name):
+
+def save_model_info(save_json_path, run_id, model_uri, model_name):
     info_dict = {
         "run_id": run_id,
-        "artifact_path": artifact_path,
+        "model_uri": model_uri,
         "model_name": model_name
     }
-    with open(save_json_path,"w") as f:
-        json.dump(info_dict,f,indent=4)
 
+    with open(save_json_path, "w") as f:
+        json.dump(info_dict, f, indent=4)
 
 if __name__ == "__main__":
     # root path
     root_path = Path(__file__).parent.parent.parent
+    print(root_path)
     # train data load path
     train_data_path = root_path / "data" / "processed" / "train_trans.csv"
     test_data_path = root_path / "data" / "processed" / "test_trans.csv"
@@ -90,6 +91,7 @@ if __name__ == "__main__":
     X_test, y_test = make_X_and_y(test_data,TARGET)
     logger.info("Data split completed")
     
+
     # load the model
     model = load_model(model_path)
     logger.info("Model Loaded successfully")
@@ -149,11 +151,37 @@ if __name__ == "__main__":
         mlflow.log_input(dataset=test_data_input,context="validation")
         
         # model signature
-        model_signature = mlflow.models.infer_signature(model_input=X_train.sample(20,random_state=42),
-                                    model_output=model.predict(X_train.sample(20,random_state=42)))
+        # model_signature = mlflow.models.infer_signature(model_input=X_train.sample(20,random_state=42),
+        #                             model_output=model.predict(X_train.sample(20,random_state=42)))
         
+        
+
         # log the final model
-        mlflow.sklearn.log_model(model,"delivery_time_pred_model",signature=model_signature)
+        # logged_model = mlflow.sklearn.log_model(sk_model=model, name="food_delivery_time_prediction", signature=model_signature)
+        # print("Model URI:", logged_model.model_uri)
+
+        sample_input = X_train.sample(20, random_state=42)
+
+        sample_output = pd.DataFrame(
+            {
+                "prediction": model.predict(sample_input)
+            }
+        )
+
+        model_signature = mlflow.models.infer_signature(
+            sample_input,
+            sample_output
+        )
+
+        print("Signature:")
+        print(model_signature)
+
+        logged_model = mlflow.sklearn.log_model(
+            sk_model=model,
+            name="food_delivery_time_prediction",
+            signature=model_signature,
+            input_example=sample_input
+        )
 
         # log stacking regressor
         mlflow.log_artifact(root_path / "models" / "stacking_regressor.joblib")
@@ -169,17 +197,23 @@ if __name__ == "__main__":
         
         logger.info("Mlflow logging complete and model logged")
         
-    # get the run id 
-    run_id = run.info.run_id
-    model_name = "delivery_time_pred_model"
     
-    # save the model info
-    save_json_path = root_path / "run_information.json"
-    save_model_info(save_json_path=save_json_path,
-                    run_id=run_id,
-                    artifact_path=artifact_uri,
-                    model_name=model_name)
+        run_id = run.info.run_id
+        model_name = "food_delivery_time_prediction"
+
+        # save the model info
+        save_json_path = root_path / "run_information.json"
+
+        save_model_info(
+            save_json_path=save_json_path,
+            run_id=run_id,
+            model_uri=logged_model.model_uri,
+            model_name=model_name
+        )
+
     logger.info("Model Information saved")
+
+
     
     
     

@@ -1,0 +1,7 @@
+[core]
+    remote = origin
+['remote "origin"']
+    url = https://dagshub.com/ayushdev1905/food-delivery-time-prediction.dvc
+    auth = basic
+    user = ayushdev1905
+    password = d7bc2f490d02bd8f61d5fd622d00418c7c9e991f
