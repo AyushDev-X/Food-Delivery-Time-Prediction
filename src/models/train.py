@@ -117,7 +117,7 @@ if __name__ == "__main__":
     stacking_reg = StackingRegressor(estimators=[("rf_model",rf),
                                                  ("lgbm_model",lgbm)],
                                      final_estimator=lr,
-                                     cv=5,n_jobs=-1)
+                                     cv=3,n_jobs=-1)
     logger.info("Stacking regressor built")
     
     # make the model wrapper

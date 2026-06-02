@@ -57,17 +57,6 @@ def load_model(model_path: Path):
     return model
 
 
-
-# def save_model_info(save_json_path, run_id, model_uri, model_name):
-#     info_dict = {
-#         "run_id": run_id,
-#         "model_uri": model_uri,
-#         "model_name": model_name
-#     }
-
-#     with open(save_json_path, "w") as f:
-#         json.dump(info_dict, f, indent=4)
-
 def save_model_info(
         save_json_path,
         run_id,
@@ -138,7 +127,7 @@ if __name__ == "__main__":
     cv_scores = cross_val_score(model,
                                 X_train,
                                 y_train,
-                                cv=5,
+                                cv=3,
                                 scoring="neg_mean_absolute_error",
                                 n_jobs=-1)
     logger.info("cross validation complete")
@@ -171,16 +160,6 @@ if __name__ == "__main__":
         # log input
         mlflow.log_input(dataset=train_data_input,context="training")
         mlflow.log_input(dataset=test_data_input,context="validation")
-        
-        # model signature
-        # model_signature = mlflow.models.infer_signature(model_input=X_train.sample(20,random_state=42),
-        #                             model_output=model.predict(X_train.sample(20,random_state=42)))
-        
-        
-
-        # log the final model
-        # logged_model = mlflow.sklearn.log_model(sk_model=model, name="food_delivery_time_prediction", signature=model_signature)
-        # print("Model URI:", logged_model.model_uri)
 
         sample_input = X_train.sample(20, random_state=42)
 
