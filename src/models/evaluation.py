@@ -58,11 +58,24 @@ def load_model(model_path: Path):
 
 
 
-def save_model_info(save_json_path, run_id, model_uri, model_name):
+# def save_model_info(save_json_path, run_id, model_uri, model_name):
+#     info_dict = {
+#         "run_id": run_id,
+#         "model_uri": model_uri,
+#         "model_name": model_name
+#     }
+
+#     with open(save_json_path, "w") as f:
+#         json.dump(info_dict, f, indent=4)
+
+def save_model_info(save_json_path, run_id, model_uri, model_name, rmse, mae, r2):
     info_dict = {
         "run_id": run_id,
         "model_uri": model_uri,
-        "model_name": model_name
+        "model_name": model_name,
+        "rmse": rmse,
+        "mae": mae,
+        "r2": r2
     }
 
     with open(save_json_path, "w") as f:
@@ -205,15 +218,8 @@ if __name__ == "__main__":
         save_json_path = root_path / "run_information.json"
 
         save_model_info(
-            save_json_path=save_json_path,
-            run_id=run_id,
-            model_uri=logged_model.model_uri,
-            model_name=model_name
-        )
-
+    save_json_path, run_id, model_uri, model_name, rmse, mae, r2)
     logger.info("Model Information saved")
 
-    # print("Model URI:", logged_model.model_uri)
-    # print("Artifact URI:", mlflow.get_artifact_uri())
     
     
