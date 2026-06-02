@@ -10,11 +10,8 @@ import json
 
 
 # initialize dagshub
-# dagshub.init(repo_owner='ayushdev1905', repo_name='Food-Delivery-Time-Prediction', mlflow=True)
+dagshub.init(repo_owner='ayushdev1905', repo_name='Food-Delivery-Time-Prediction', mlflow=True)
 
-import os
-os.environ["MLFLOW_TRACKING_USERNAME"] = "ayushdev1905"
-os.environ["MLFLOW_TRACKING_PASSWORD"] = "d7bc2f490d02bd8f61d5fd622d00418c7c9e991f"
 
 # set the mlflow tracking server
 mlflow.set_tracking_uri("https://dagshub.com/ayushdev1905/Food-Delivery-Time-Prediction.mlflow")
