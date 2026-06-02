@@ -10,8 +10,11 @@ import json
 
 
 # initialize dagshub
-dagshub.init(repo_owner='ayushdev1905', repo_name='Food-Delivery-Time-Prediction', mlflow=True)
+# dagshub.init(repo_owner='ayushdev1905', repo_name='Food-Delivery-Time-Prediction', mlflow=True)
 
+import os
+os.environ["MLFLOW_TRACKING_USERNAME"] = "ayushdev1905"
+os.environ["MLFLOW_TRACKING_PASSWORD"] = "d7bc2f490d02bd8f61d5fd622d00418c7c9e991f"
 
 # set the mlflow tracking server
 mlflow.set_tracking_uri("https://dagshub.com/ayushdev1905/Food-Delivery-Time-Prediction.mlflow")
@@ -178,7 +181,7 @@ if __name__ == "__main__":
 
         logged_model = mlflow.sklearn.log_model(
             sk_model=model,
-            name="food_delivery_time_prediction",
+            artifact_path="food_delivery_time_prediction",
             signature=model_signature,
             input_example=sample_input
         )
@@ -213,9 +216,7 @@ if __name__ == "__main__":
 
     logger.info("Model Information saved")
 
-
-    
-    
-    
+    # print("Model URI:", logged_model.model_uri)
+    # print("Artifact URI:", mlflow.get_artifact_uri())
     
     

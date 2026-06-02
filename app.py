@@ -136,6 +136,7 @@ def do_predictions(data: Data):
         'City': data.City
         },index=[0]
     )
+    pred_data["time_taken"] = "(min) 0"  # ← string, matches the expected format
     # clean the raw input data
     cleaned_data = perform_data_cleaning(pred_data)
     # get the predictions
@@ -146,3 +147,5 @@ def do_predictions(data: Data):
    
 if __name__ == "__main__":
     uvicorn.run(app="app:app",host="0.0.0.0",port=8000)
+
+
