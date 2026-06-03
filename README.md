@@ -1,61 +1,177 @@
-# food-delivery-time-prediction
+# 🚚 Food Delivery ETA Prediction and MLOps Platform
 
-<a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
-</a>
+## Overview
 
-Building a ML model for predicting the time taken by the delivery patner taking in account various features
+An end-to-end Machine Learning and MLOps project that predicts food delivery times using historical delivery data. The project follows industry-standard practices for data preprocessing, model development, experiment tracking, versioning, deployment, and CI/CD automation.
 
-## Project Organization
+**Key Result:** Achieved **0.823 Test R²** and **3.17 MAE** using a stacked ensemble model optimized with Optuna.
 
-```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
-├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         food_delivery_time_prediction and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── food_delivery_time_prediction   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes food_delivery_time_prediction a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+---
+
+## Problem Statement
+
+Accurate delivery time estimation is crucial for customer satisfaction and operational efficiency in food delivery platforms. This project aims to build a scalable and production-ready system capable of predicting delivery times with high accuracy.
+
+---
+
+## Dataset
+
+* **45K+ delivery records**
+* Numerical and categorical features related to orders, delivery partners, distance, traffic, weather, and restaurant information.
+
+---
+
+## Workflow
+
+```text
+Data Collection
+      │
+      ▼
+Data Cleaning & Preprocessing
+      │
+      ▼
+EDA & Feature Engineering
+      │
+      ▼
+Model Training & Tuning
+      │
+      ▼
+Stacking Regressor
+      │
+      ▼
+MLflow + DVC + DagsHub
+      │
+      ▼
+Flask API
+      │
+      ▼
+Docker
+      │
+      ▼
+GitHub Actions CI/CD
 ```
 
---------
+---
 
+## Exploratory Data Analysis
+
+* Univariate and bivariate analysis
+* Missing value analysis
+* Outlier detection and treatment
+* Feature-target relationship analysis
+* Correlation analysis and visualization
+
+---
+
+## Model Development
+
+### Baseline Models
+
+* Linear Regression
+* Random Forest Regressor
+
+### Final Model
+
+**Stacking Regressor**
+
+* Base Models:
+
+  * LightGBM
+  * Random Forest
+* Meta Model:
+
+  * Linear Regression
+
+### Optimization
+
+* Optuna Hyperparameter Tuning
+* Cross Validation
+
+---
+
+## Model Performance
+
+| Metric      | Score |
+| ----------- | ----- |
+| Train R²    | 0.849 |
+| Test R²     | 0.823 |
+| Train MAE   | 2.91  |
+| Test MAE    | 3.17  |
+| Mean CV MAE | 3.17  |
+
+---
+
+## MLOps Features
+
+### Experiment Tracking
+
+* MLflow
+* Model Registry
+* Artifact Logging
+
+### Data Versioning
+
+* DVC
+* DagsHub Integration
+
+### CI/CD
+
+* GitHub Actions
+
+### Containerization
+
+* Docker
+
+---
+
+## Deployment
+
+The trained model is deployed as a **Flask REST API**, enabling real-time delivery time predictions through API endpoints.
+
+```text
+User Input → Flask API → Preprocessing Pipeline → Model → ETA Prediction
+```
+
+---
+
+## Project Structure
+
+```text
+├── notebooks/
+├── src/
+│   ├── components/
+│   ├── pipelines/
+│   ├── utils/
+│   ├── logger/
+│   └── exception/
+├── artifacts/
+├── app.py
+├── Dockerfile
+├── dvc.yaml
+├── requirements.txt
+└── .github/workflows/
+```
+
+---
+
+## Tech Stack
+
+**Python • Pandas • NumPy • Scikit-Learn • LightGBM • Optuna • MLflow • DVC • DagsHub • Flask • Docker • GitHub Actions • Matplotlib • Seaborn**
+
+---
+
+## Key Highlights
+
+✅ End-to-end ML pipeline on **45K+ records**
+✅ Stacking Ensemble with **LightGBM + Random Forest + Linear Regression**
+✅ **0.823 Test R²** and **3.17 MAE**
+✅ Experiment tracking using MLflow
+✅ Data versioning with DVC and DagsHub
+✅ Dockerized Flask API deployment
+✅ Automated CI/CD with GitHub Actions
+
+---
+
+**Ayush Devan**
+
+Machine Learning • Data Science • MLOps • Data Engineering
