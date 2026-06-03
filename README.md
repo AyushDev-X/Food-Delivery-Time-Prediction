@@ -163,11 +163,17 @@ User Input → Flask API → Preprocessing Pipeline → Model → ETA Prediction
 ## Key Highlights
 
 ✅ End-to-end ML pipeline on **45K+ records**
+
 ✅ Stacking Ensemble with **LightGBM + Random Forest + Linear Regression**
+
 ✅ **0.823 Test R²** and **3.17 MAE**
+
 ✅ Experiment tracking using MLflow
+
 ✅ Data versioning with DVC and DagsHub
+
 ✅ Dockerized Flask API deployment
+
 ✅ Automated CI/CD with GitHub Actions
 
 ---
