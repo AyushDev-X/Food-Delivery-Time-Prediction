@@ -1,6 +1,0 @@
-#!/Users/ayushdx1905/Developer/ML_CODE/food-delivery-time-prediction/myenv311/bin/python3.11
-import sys
-from semver.cli import main
-if __name__ == '__main__':
-    sys.argv[0] = sys.argv[0].removesuffix('.exe')
-    sys.exit(main())
